@@ -19,7 +19,6 @@ class _FlickVideoPlayerPackageState extends State<FlickVideoPlayerPackage> {
   FlickManager? flickManager;
   VideoPlayerController? videoPlayerController;
   Duration? prevPosition;
-  RxString fileName = ''.obs;
   @override
   void initState() {
     // TODO: implement initState
@@ -78,11 +77,6 @@ class _FlickVideoPlayerPackageState extends State<FlickVideoPlayerPackage> {
             TextButton(
                 onPressed: exitFullScreenWebCallBack,
                 child: const Text("web full screen exit call back")),
-            Obx(() {
-              return fileName.value.isNotEmpty
-                  ? Image.file(File(fileName.value))
-                  : const SizedBox();
-            })
           ],
         ));
   }
