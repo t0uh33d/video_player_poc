@@ -1,8 +1,10 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:video_player/video_player.dart';
 
 class FlickVideoPlayerPackage extends StatefulWidget {
@@ -17,6 +19,7 @@ class _FlickVideoPlayerPackageState extends State<FlickVideoPlayerPackage> {
   FlickManager? flickManager;
   VideoPlayerController? videoPlayerController;
   Duration? prevPosition;
+  RxString fileName = ''.obs;
   @override
   void initState() {
     // TODO: implement initState
@@ -50,6 +53,13 @@ class _FlickVideoPlayerPackageState extends State<FlickVideoPlayerPackage> {
   }
 
   @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    flickManager?.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
@@ -67,7 +77,12 @@ class _FlickVideoPlayerPackageState extends State<FlickVideoPlayerPackage> {
             ),
             TextButton(
                 onPressed: exitFullScreenWebCallBack,
-                child: const Text("web full screen exit call back"))
+                child: const Text("web full screen exit call back")),
+            Obx(() {
+              return fileName.value.isNotEmpty
+                  ? Image.file(File(fileName.value))
+                  : const SizedBox();
+            })
           ],
         ));
   }
